@@ -12,7 +12,6 @@
 #define DNS_PORT 53
 // Options to enable serial printing
 #define VERBOSE
-
 const IPAddress apIP(192, 168, 2, 1);
 const IPAddress gateway(255, 255, 255, 0);
 
@@ -27,6 +26,45 @@ void redirectToIndex(AsyncWebServerRequest *request)
 #else
   request->redirect("http://" + apIP.toString());
 #endif
+}
+void listDir(const char *dirname, uint8_t levels)
+{
+  Serial.printf("Listing directory: %s\n", dirname);
+
+  File root = LittleFS.open(dirname);
+  if (!root)
+  {
+    Serial.println("Failed to open directory");
+    return;
+  }
+
+  if (!root.isDirectory())
+  {
+    Serial.println("Not a directory");
+    return;
+  }
+
+  File file = root.openNextFile();
+  while (file)
+  {
+    if (file.isDirectory())
+    {
+      Serial.print("  DIR : ");
+      Serial.println(file.name());
+      if (levels)
+      {
+        listDir(file.name(), levels - 1);
+      }
+    }
+    else
+    {
+      Serial.print("  FILE: ");
+      Serial.print(file.name());
+      Serial.print("  SIZE: ");
+      Serial.println(file.size());
+    }
+    file = root.openNextFile();
+  }
 }
 
 void setup()
@@ -55,10 +93,18 @@ void setup()
   if (!LittleFS.begin())
   {
 #ifdef VERBOSE
-    Serial.println("An Error has occurred while mounting LittleFS");
+    Serial.println("An Error has occurred while mounting LittleFS, formatting...");
 #endif
-    return;
+    LittleFS.format();     // Format LittleFS
+    if (!LittleFS.begin()) // Try to mount again after formatting
+    {
+#ifdef VERBOSE
+      Serial.println("Failed to initialize LittleFS after formatting!");
+#endif
+      return;
+    }
   }
+  listDir("/", 0); // List all files and directories from the root level
 
   // bind websocket to async web server
   websocket.onEvent(wsEventHandler);
