@@ -1,20 +1,17 @@
 
-import { useCallback, useContext, useState } from "react";
-import { WordclockDataContext } from './AppContext/AppContext.tsx'; // Import the WordclockDataContext
+import { useContext } from "react";
+import { useWordclockData, WordclockDataContext } from './AppContext/AppContext.tsx'; // Import the WordclockDataContext
 
 export function Connection() {
   const WordclockData = useContext(WordclockDataContext);
   if (!WordclockData) {
     throw new Error("WordclockDataContext is not available");
   }
-  const [ssid, setSsid] = useState(WordclockData.ssid  );
-  const [password, setPassword] = useState(WordclockData.password);
+  const {ssid, setSsid} = useWordclockData();
+  const {password, setPassword} = useWordclockData();
+  const {connectionStatus} = useWordclockData();
 
-  const [isConnected] = useState(WordclockData.isConnected);
-
-  const changed=useCallback(() => {
-    console.log(`SSID: ${ssid}, Password: ${password}`);
-  }, [ssid, password, isConnected]);
+  
 
   return (
     <div>
@@ -24,7 +21,7 @@ export function Connection() {
 
       <div className="row-view">
         <p>Is Wifi connected?:</p>
-        <p>{isConnected ? "Yes" : "No"}</p>
+        <p>{connectionStatus}</p>
       </div>
 
       <div style={{ paddingBottom: "20px" }}></div>
@@ -58,7 +55,7 @@ export function Connection() {
             if (password !== "") {
               setPassword(password);
             }
-            changed();
+          WordclockData.updateWifiCredentials();
           }}
         >
           Set Wifi Connection
