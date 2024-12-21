@@ -13,12 +13,17 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.13.2",
+    "bootstrap": "^5.3.3",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.7",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.28.0",
     "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
+    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18.0.11",
     "@types/websocket": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^5.57.1",

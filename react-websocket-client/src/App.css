@@ -1,18 +1,169 @@
-.wrapper,
-html,
-body {
-  height: 100%;
+/* App.css */
+
+/* General Reset */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.wrapper {
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Main Container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navigation Bar */
+.navbar {
+  background-color: #4a90e2;
+  color: white;
+  padding: 10px 0;
+}
+
+.navbar ul {
+  list-style: none;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
-.centered {
-  height: 100dvh;
+.navbar li {
+  margin: 0 15px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Section Headers */
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #4a90e2;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+/* Form Row View */
+.row-view {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 15px 0;
+}
+
+.row-view label {
+  flex: 1;
+  font-weight: bold;
+}
+
+.row-view input[type="time"],
+.row-view input[type="text"],
+.row-view select,
+.row-view input[type="checkbox"] {
+  flex: 2;
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.row-view input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.row-view p {
+  margin: 5px 0;
+}
+
+/* Divider */
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 20px 0;
+}
+
+/* Button */
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357abd;
+}
+
+/* Additional Styling for Specific Elements */
+input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+input[type="time"],
+input[type="text"],
+select {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+input[type="time"]:focus,
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+/* Slider (range input) */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  background: #4a90e2;
+  outline: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #4a90e2;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  background: #4a90e2;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.center-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  background-color: #f4f4f9; /* Optional background color */
 }
