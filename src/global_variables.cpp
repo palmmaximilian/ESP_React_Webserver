@@ -126,7 +126,6 @@ int len_OClock[NUMBERLANGUAGES] = {3,6};
 String ColorInHex = "#FF0000";
 String BrightnessPercent = "50";
 String TimezoneUMT = "1";
-String SummertimeActive = "1";
 String NightmodeFrom = "22:00";
 String NightmodeTo = "07:00";
 String NightmodeActive = "0";
@@ -172,12 +171,13 @@ String ConfigValue[16]; // the value itself (String)
 
 String Wlanssid[50];
 String Wlanrssi[50];
+String Wlanauth[50];
 
 int numberWlan;
 boolean wificonnected = false;
 String wifiConnectionState = "disconnected";
 boolean newnetwork = false;
-
+int reconnectionCounter = 0;
 // BLE SECTION
 bool isConnected = false;
 long heartbeatTimer = 0;

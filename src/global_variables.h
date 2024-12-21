@@ -123,7 +123,6 @@ extern int len_OClock[NUMBERLANGUAGES];
 extern String ColorInHex;
 extern String BrightnessPercent;
 extern String TimezoneUMT;
-extern String SummertimeActive;
 extern String NightmodeFrom;
 extern String NightmodeTo;
 extern String NightmodeActive;
@@ -160,10 +159,12 @@ extern String ConfigName[16];
 extern String ConfigValue[16];
 extern String Wlanssid[50];
 extern String Wlanrssi[50];
+extern String Wlanauth[50];
 extern int numberWlan;
 extern boolean wificonnected;
 extern String wifiConnectionState;
 extern boolean newnetwork;
+extern int reconnectionCounter;
 
 // BLE Variables
 extern bool isConnected;
