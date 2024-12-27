@@ -1,65 +1,70 @@
-import { useContext } from "react";
-import { HuePicker } from "react-color";
-import {
-  useWordclockData,
-  WordclockDataContext,
-} from "./AppContext/AppContext.tsx";
-import "./App.css"; // Assuming you have a CSS file for styles
+import { HuePicker, ColorResult } from "react-color";
+import { useWordclockData } from "./AppContext/AppContext.tsx";
+import { Container, Row, Col, Form } from "react-bootstrap";
 
 export function Colors() {
-  // const [sliderState, setSliderState] = useState(50);
-  // const [color, setColor] = useState('#ffffff');
-  const WordclockData = useContext(WordclockDataContext);
-  if (!WordclockData) {
-    throw new Error("WordclockDataContext is not available");
-  }
-  const { brightness, setBrightness } = useWordclockData();
-  // const [localColor, setLocalColor] = useState('#ffffff');
-  const { color, setColor } = useWordclockData();
+  const { brightness, setBrightness, color, setColor, updateBrightness, updateColor } = useWordclockData();
 
   return (
-    <div>
-      <div className="rowView">
-        <h2 className="titleText">Color</h2>
-      </div>
+    <Container fluid="sm">
+      <Row className="mb-3">
+        <Col>
+          <h2>Color Settings</h2>
+        </Col>
+      </Row>
 
-      <div className="rowView">
-        <span className="baseText" style={{ width: 150 }}>
-          Brightness
-        </span>
-        <span className="baseText">Value: {brightness}%</span>
-      </div>
+      <Row className="align-items-center mb-3">
+        <Col xs={12} md={4}>
+          <Form.Label>Brightness</Form.Label>
+        </Col>
+        <Col xs={2} md={2}>
+          {`${brightness}%`}
+        </Col>
+        <Col xs={10} md={6}>
+          <Form.Range
+            value={brightness}
+            max={100}
+            min={0}
+            step={5}
+            onChange={(e) => {
+              setBrightness(e.target.value);
+            }}
+            onMouseUp={(e) => {
+              const newBrightness = (e.target as HTMLInputElement).value;
+              updateBrightness(newBrightness);
+            }}
+            onTouchEnd={(e) => {
+              const newBrightness = (e.target as HTMLInputElement).value;
+              updateBrightness(newBrightness);
+            }}
+          />
+        </Col>
+      </Row>
 
-      <input
-        type="range"
-        value={brightness}
-        max={100}
-        min={0}
-        step={5}
-        onChange={(e) => {
-          setBrightness(e.target.value);
-          WordclockData.updateBrightness(e.target.value);
-        }}
-      />
-      <HuePicker
-        color={color}
-        onChangeComplete={(color) => {
-          setColor(color.hex);
-          WordclockData.updateColor(color.hex.toString());
-        }}
-      />
-      <div className="rowView">
-        <span className="baseText">Selected Color</span>
-        <div
-          style={{
-            width: 50,
-            height: 50,
-            backgroundColor: color.toString(),
-            border: "1px solid #000",
-            marginLeft: 10,
-          }}
-        />
-      </div>
-    </div>
+      <Row className="align-items-center mb-3">
+        <Col xs={12} md={4}>
+          <Form.Label>Selected Color</Form.Label>
+        </Col>
+        <Col xs={2} md={2}>
+          <div
+            style={{
+              width: "50px",
+              height: "50px",
+              backgroundColor: typeof color === 'string' ? color : color.hex,
+              border: "1px solid #000",
+              borderRadius: "4px",
+            }}
+          />
+        </Col>
+        <Col xs={10} md={6}>
+          <HuePicker
+            color={color}
+            onChange={(color: ColorResult) => setColor(color.hex)}
+            onChangeComplete={(color: ColorResult) => updateColor(color.hex)}
+            width="100%"
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 }

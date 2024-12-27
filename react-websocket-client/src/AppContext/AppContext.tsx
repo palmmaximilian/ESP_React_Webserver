@@ -12,11 +12,11 @@ import { w3cwebsocket, IMessageEvent } from "websocket";
 
 interface WordclockDataContextType {
   connectionStatus: string;
-  isConnected: boolean;
   ssidList: string[];
   ssid: string;
   password: string;
   timezone: string;
+  timezoneCode: string;
   language: string;
   nightmode: boolean;
   nightmodebrightness: string;
@@ -25,11 +25,11 @@ interface WordclockDataContextType {
   color: Color;
   brightness: string;
   setConnectionStatus: (connectionStatus: string) => void;
-  setIsConnected: (isConnected: boolean) => void;
   setSsidList: (ssidList: string[]) => void;
   setSsid: (ssid: string) => void;
   setPassword: (password: string) => void;
   setTimezone: (timezone: string) => void;
+  setTimezoneCode: (timezoneCode: string) => void;
   setLanguage: (language: string) => void;
   setNightmode: (nightmode: boolean) => void;
   setNightmodebright: (brightness: string) => void;
@@ -39,6 +39,7 @@ interface WordclockDataContextType {
   setBrightness: (brightness: string) => void;
   updateWifiCredentials: () => void;
   updateTimezone: (tempTimezone: string) => void;
+  updateTimezoneCode: (tempTimezoneCode: string) => void
   updateLanguage: (tempLang: string) => void;
   updateNightmode: (tempNightmode: boolean) => void;
   updateNightmodebrightness: (tempNightmodebrightness: string) => void;
@@ -58,8 +59,7 @@ export const WordclockDataProvider = ({
   children: ReactNode;
 }) => {
   const websocket = useRef<w3cwebsocket | null>(null);
-  const [connectionStatus, setConnectionStatus] = useState("%");
-  const [isConnected, setIsConnected] = useState(false);
+  const [connectionStatus, setConnectionStatus] = useState("No connection to Wordclock");
   const [ssid, setSsid] = useState("");
   const [ssidList, setSsidList] = useState<string[]>([
     "ssid1",
@@ -67,7 +67,8 @@ export const WordclockDataProvider = ({
     "ssid3",
   ]);
   const [password, setPassword] = useState("");
-  const [timezone, setTimezone] = useState("0");
+  const [timezone, setTimezone] = useState("Select Timezone");
+  const [timezoneCode, setTimezoneCode] = useState("");
   const [language, setLanguage] = useState("1");
   const [nightmode, setNightmode] = useState(false);
   const [nightmodebrightness, setNightmodebright] = useState("50");
@@ -89,6 +90,16 @@ export const WordclockDataProvider = ({
       })
     );
   };
+
+  const updateTimezoneCode = (tempTimezoneCode: string) => {
+    console.log("Sending timezoneCode: " + tempTimezoneCode);
+    websocket.current?.send(
+      JSON.stringify({
+        type: "message",
+        timezoneCode: tempTimezoneCode,
+      })
+    );
+  }
 
   const updateLanguage = (tempLang: string) => {
     console.log("Sending language: " + tempLang);
@@ -250,11 +261,11 @@ export const WordclockDataProvider = ({
     <WordclockDataContext.Provider
       value={{
         connectionStatus,
-        isConnected,
         ssidList,
         ssid,
         password,
         timezone,
+        timezoneCode,
         language,
         nightmode,
         nightmodebrightness,
@@ -263,11 +274,11 @@ export const WordclockDataProvider = ({
         color,
         brightness,
         setConnectionStatus,
-        setIsConnected,
         setSsidList,
         setSsid,
         setPassword,
         setTimezone,
+        setTimezoneCode,
         setLanguage,
         setNightmode,
         setNightmodebright,
@@ -277,6 +288,7 @@ export const WordclockDataProvider = ({
         setBrightness,
         updateWifiCredentials,
         updateTimezone,
+        updateTimezoneCode,
         updateLanguage,
         updateNightmode,
         updateNightmodebrightness,

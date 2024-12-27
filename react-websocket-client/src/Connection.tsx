@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Dropdown from "react-bootstrap/Dropdown";
 
+
 export function Connection() {
   const WordclockData = useContext(WordclockDataContext);
   if (!WordclockData) {
@@ -23,7 +24,7 @@ export function Connection() {
     <Container fluid="sm">
       <Row className="my-3">
         <Col xs={6}>Current Status:</Col>
-        <Col xs={6}>{connectionStatus}</Col>
+        <Col xs={6} className="text-end">{connectionStatus}</Col>
       </Row>
 
       <Row className="my-3">
@@ -31,7 +32,7 @@ export function Connection() {
           <label>Available Networks:</label>
         </Col>
         <Col xs={8}>
-          <Dropdown className="w-100">
+            <Dropdown className="w-100 text-end">
             <Dropdown.Toggle
               variant="success"
               id="dropdown-basic"
@@ -78,7 +79,8 @@ export function Connection() {
       </Row>
 
       <Row className="my-3 justify-content-center" >
-        <Col>
+        <Col xs={0} md={4}></Col>
+        <Col xs={12} md={8}>
           <button
             className="btn btn-primary w-100"
             onClick={() => {

@@ -1,6 +1,6 @@
 // Navbar.tsx
 
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // import "./Navbar.css"; // Import a CSS file for styling
 
 import Container from 'react-bootstrap/Container';
@@ -9,24 +9,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 const NavigationBar = () => {
   return (
-    // <nav className="navbar">
-    //   <div className="navbar-logo">Wordclock</div>
-    //   <ul className="navbar-links">
-    //     <li>
-    //       <Link to="/wifi">Wifi</Link>
-    //     </li>
-    //     <li>
-    //       <Link to="/settings">Settings</Link>
-    //     </li>
-    //     <li>
-    //       <Link to="/colors">Colors</Link>
-    //     </li>
-    //   </ul>
-    // </nav>
-
- <Navbar expand="lg" className="bg-body-tertiary">
+  <Navbar expand="lg" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
 <Container>
-  <Navbar.Brand href="wifi">Wordclock by Uniquelymade</Navbar.Brand>
+  {/* <Navbar.Brand href="wifi">Wordclock by Uniquelymade</Navbar.Brand> */}
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="me-auto">
